@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<title>Admin Page</title>
+</head>
+
+<body class="bg-gray-100 p-8">
+
+<div class="max-w-md mx-auto bg-white p-8 border rounded shadow-md">
+<div class="flex justify-between">
+<h2 class="text-2xl font-semibold mb-4">Admin Panel</h2>
+
+<a href="home.html" class="text-2xl font-semibold mb-4">Home</a>
+</div>
+
+<!-- Add Product Form -->
+<form id="addForm" class="mb-4">
+
+<label class="block text-sm font-medium text-gray-700">Product Name</label>
+<input type="text" id="productName" name="productName" class="mt-1 p-2 border rounded w-full">
+
+<label class="block text-sm font-medium text-gray-700 mt-4">Season Name</label>
+<input type="text" id="seasonName" name="seasonName" class="mt-1 p-2 border rounded w-full">
+
+<label class="block text-sm font-medium text-gray-700 mt-4">Description</label>
+<input type="text" id="description" name="description" class="mt-1 p-2 border rounded w-full">
+
+<label class="block text-sm font-medium text-gray-700 mt-4">Image URL</label>
+<input type="text" id="imageURL" name="imageURL" class="mt-1 p-2 border rounded w-full">
+
+<label class="block text-sm font-medium text-gray-700 mt-4">Price</label>
+<input type="text" id="price" name="price" class="mt-1 p-2 border rounded w-full">
+
+
+<button type="button" onclick="addProduct()" class="mt-4 bg-green-500 text-white px-4 py-2 rounded">Add Product</button>
+</form>
+
+<ul id="productList" class="space-y-4">
+</ul>
+</div>
+
+<script>
+// Array to store added products
+const products = [];
+
+// Function to add a new product
+function addProduct() {
+const productName = document.getElementById('productName').value;
+const seasonName = document.getElementById('seasonName').value;
+const description = document.getElementById('description').value;
+const imageURL = document.getElementById('imageURL').value;
+const price = document.getElementById('price').value;
+}
+// Validate input
+if (!productName || !seasonName || description ||  !imageURL || price) {
+alert('Please fill in all fields.');
+return;
+}
+
+// Create a new product object
+const product = {
+id: Date.now(),
+productName,
+seasonName,
+description,
+imageURL,
+price,
+};
+
+// Add the product to the array
+products.push(product);
+
+// Update the product list
+updateProductList();
+
+// Clear the form fields
+document.getElementById('productName').value = '
+document.getElementById('seasonName').value = '
+document.getElementById('description').value = '
+document.getElementById('imageURL').value = '
+document.getElementById('price').value = '
+}
+
+// Function to update the product list
+function updateProductList() {
+const productList = document.getElementById('productList');
+
+// Clear the existing list
+productList.innerHTML = '
+
+// Add each product to the list
+products.forEach(product => {
+const listItem = document.createElement('li');
+listItem.classList.add('flex', 'items-center', 'space-x-4');
+
+// Product details
+listItem.innerHTML = `
+<img src="${product.imageURL}" alt="${product.productName}" class="w-12 h-12 object-cover rounded">
+<div>
+<p class="text-sm font-semibold">${product.productName}</p>
+<p class="text-xs text-gray-500">${product.seasonName}</p>
+<p class="text-xs text-gray-500">${product.description}</p>
+<p class="text-xs text-gray-500">${product.price}</p>
+</div>
+`;
+
+// Edit button
+const editButton = document.createElement('button');
+editButton.textContent = 'Edit
+editButton.classList.add('text-blue-500', 'text-sm', 'font-medium', 'cursor-pointer');
+editButton.addEventListener('click', () => editProduct(product.id));
+
+// Delete button
+const deleteButton = document.createElement('button');
+deleteButton.textContent = 'Delete
+deleteButton.classList.add('text-red-500', 'text-sm', 'font-medium', 'cursor-pointer');
+deleteButton.addEventListener('click', () => deleteProduct(product.id));
+
+// Append buttons to the list item
+listItem.appendChild(editButton);
+listItem.appendChild(deleteButton);
+
+// Append the list item to the product list
+productList.appendChild(listItem);
+});
+}
+
+// Function to edit a product
+function editProduct(productId) {
+const product = products.find(p => p.id === productId);
+
+if (!product) {
+alert('Product not found.');
+return;
+}
+
+// Prompt the user to edit details
+const editedProductName = prompt('Edit Product Name:', product.productName);
+const editedSeasonName = prompt('Edit Season Name:', product.seasonName);
+const editedDescription = prompt('Edit Description:', product.description);
+const editedImageURL = prompt('Edit Image URL:', product.imageURL);
+const editedPrice = prompt('Edit Price:', product.price);
+
+// Update product details if input is not canceled
+if (editedProductName !== null && editedSeasonName !== null && editedDescription != null && editedImageURL !== null && editedPrice != null) {
+product.productName = editedProductName;
+product.seasonName = editedSeasonName;
+product.seasonDescription = editedSeasonDescription;
+product.imageURL = editedImageURL;
+product.price = editedPrice;
+
+// Update the product list
+updateProductList();
+}
+}
+
+// Function to delete a product
+function deleteProduct(productId) {
+const index = products.findIndex(p => p.id === productId);
+
+if (index !== -1) {
+// Remove the product from the array
+products.splice(index, 1);
+
+// Update the product list
+updateProductList();
+}
+}
+</script>
+
+</body>
+
+
+

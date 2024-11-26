@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Login Page</title>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+  <div class="max-w-md w-full p-6 bg-white rounded-md shadow-md">
+    <h2 class="text-2xl font-semibold mb-6 text-center">Login</h2>
+
+    <form id="loginForm">
+      <div class="mb-4">
+        <label for="username" class="block text-sm font-medium text-gray-600">Username</label>
+        <input type="text" id="username" name="username" class="mt-1 p-2 border rounded w-full">
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
+        <input type="password" id="password" name="password" class="mt-1 p-2 border rounded w-full">
+      </div>
+
+      <button type="button" onclick="login()" class="w-full bg-green-600 text-white py-2 rounded-md">Login</button>
+    </form>
+
+    <p class="mt-4 text-center">
+      <a href="#" class="text-green-800">Forgot Password?</a><br>
+      Don't have an account? <a href="signUp.html" class="text-blue-400">Please Sign Up</a>
+    </p>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Check credentials and redirect
+      if (username === 'user' && password === '12345') {
+        window.location.href = 'home.html';
+      } else if (username === 'admin' && password === '123456') {
+        window.location.href = 'admin.html';
+      } else {
+        alert('Invalid username or password. Please try again.');
+      }
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Payment</title>
+</head>
+<body class="font-sans bg-gray-100">
+
+  <div class="container mx-auto flex justify-center items-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+      <h2 class="text-2xl font-semibold mb-6 text-blue-600">Payment Options</h2>
+
+      <!-- Payment Method Selection -->
+      <div class="mb-4">
+        <label class="block text-gray-700">Select Payment Method:</label>
+        <select id="paymentMethod" class="w-full p-2 border rounded focus:outline-none focus:ring focus:border-blue-300" onchange="handlePaymentMethodChange()">
+          <option value="" disabled selected>Select an option</option>
+          <option value="cash">Cash</option>
+          <option value="digital">Digital</option>
+        </select>
+      </div>
+
+      <!-- Digital Payment Options -->
+      <div id="digitalOptions" class="hidden mb-4">
+        <label class="block text-gray-700">Select Digital Payment Provider:</label>
+        <select id="digitalProvider" class="w-full p-2 border rounded focus:outline-none focus:ring focus:border-blue-300" onchange="handleDigitalProviderChange()">
+          <option value="" disabled selected>Select a provider</option>
+          <option value="bkash">Bkash</option>
+          <option value="nagad">Nagad</option>
+        </select>
+
+        <!-- Phone Number Input for Digital Payment -->
+        <div id="phoneInput" class="hidden mt-4">
+          <label class="block text-gray-700">Enter Phone Number:</label>
+          <input type="text" id="phoneNumber" class="w-full p-2 border rounded focus:outline-none focus:ring focus:border-blue-300" placeholder="Enter your phone number">
+        </div>
+      </div>
+
+      <!-- Make Payment Button -->
+      <button id="makePaymentBtn" onclick="makePayment()" class="w-full bg-blue-500 text-white py-3 px-6 rounded-full focus:outline-none focus:ring focus:border-blue-300" disabled>Make Payment</button>
+    </div>
+  </div>
+
+  <script>
+    function handlePaymentMethodChange() {
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const makePaymentBtn = document.getElementById('makePaymentBtn');
+      const phoneInput = document.getElementById('phoneInput');
+
+      if (paymentMethod === 'digital') {
+        document.getElementById('digitalOptions').classList.remove('hidden');
+        phoneInput.classList.remove('hidden');
+        makePaymentBtn.disabled = true; 
+      } else {
+        document.getElementById('digitalOptions').classList.add('hidden');
+        phoneInput.classList.add('hidden');
+        makePaymentBtn.disabled = false; 
+      }
+    }
+
+    function handleDigitalProviderChange() {
+      const makePaymentBtn = document.getElementById('makePaymentBtn');
+      makePaymentBtn.disabled = false; 
+    }
+
+    function makePayment() {
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const digitalProvider = document.getElementById('digitalProvider')?.value;
+      const phoneNumber = document.getElementById('phoneNumber')?.value;
+
+      if (paymentMethod === 'cash') {
+        showToast('Thank you! Payment will be collected soon.');
+      } else if (paymentMethod === 'digital' && digitalProvider && phoneNumber) {
+        showToast('Thank you! Your payment has been collected. Phone Number: ' + phoneNumber);
+        clearForm();
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    }
+
+    function showToast(message) {
+      alert(message);
+    }
+
+    function clearForm() {
+      document.getElementById('paymentMethod').value = '';
+      document.getElementById('digitalProvider').value = '';
+      document.getElementById('phoneNumber').value = '';
+      document.getElementById('makePaymentBtn').disabled = true;
+    }
+  </script>
+
+</body>
+</html>
